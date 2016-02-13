@@ -31,15 +31,18 @@ namespace RestBiz
 
         protected void LoginUser_Authenticate(object sender, AuthenticateEventArgs e)
         {
-            bool status = false;
-            bool activated = false;
-            status = Membership.ValidateUser(LoginUser.UserName, LoginUser.Password);
-            activated = new KorisnikService().IsActivated(LoginUser.UserName);
-            if (status&&activated)
+            bool exists = false;
+            bool isActivated = false;
+            exists = Membership.ValidateUser(LoginUser.UserName, LoginUser.Password);
+            if (exists)
+            {
+                isActivated = new KorisnikService().IsActivated(LoginUser.UserName);
+            }
+            if (exists && isActivated)
             {
                 FormsAuthentication.RedirectFromLoginPage(LoginUser.UserName, false);
             }
-            else if(!activated)
+            else if(exists && !isActivated)
             {
                 Response.Redirect("Info.aspx?type=neakt");
             }
