@@ -73,7 +73,7 @@
     <div style="margin-top: 50px;">
 
         <legend>Dodaj prijatelje</legend>
-        <asp:TextBox ID="SearchInput" runat="server" class="pure-input-rounded"></asp:TextBox>
+        <asp:TextBox ID="SearchInput" runat="server" class="pure-input-rounded" onkeypress ="return enterEvent(event)"></asp:TextBox>
         <asp:Button ID="SearchButton" runat="server" class="pure-button" Text="Pretraži" OnClick="SearchButton_Click" />
 
         <div class="content-subhead">
@@ -101,6 +101,8 @@
         </div>
 
     </div>
+
+    <asp:Button runat="server" ID="btnSample" Text="" style="display:none;" OnClick="btnSample_Click" />
     
 
 </asp:Content>

@@ -38,7 +38,7 @@
                 </div>
 
                 <asp:Button ID="LogoutButton" runat="server" Text="Odjavi se"
-                    class="pure-button" Style="float: right" OnClick="LogoutButton_Click" />
+                    class="pure-button" Style="float: right" OnClick="LogoutButton_Click" UseSubmitBehavior="False" />
 
 
                 <div class="content">

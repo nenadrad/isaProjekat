@@ -56,3 +56,9 @@ function removeFriend(friendId, index) {
             }
         });
 }
+
+function enterEvent(e) {
+    if (e.keyCode == 13) {
+        __doPostBack('<%=SearchButton.ClientID%>', "");
+    }
+}

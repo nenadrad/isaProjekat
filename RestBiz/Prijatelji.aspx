@@ -7,7 +7,7 @@
     </div>
     
     <legend>Pretraga</legend>
-        <asp:TextBox ID="SearchInput" runat="server" class="pure-input-rounded"></asp:TextBox>
+        <asp:TextBox ID="SearchInput" runat="server" class="pure-input-rounded" onkeypress="return enterEvent(event)"></asp:TextBox>
         <asp:Button ID="SearchButton" runat="server" class="pure-button" Text="Pretraži" OnClick="SearchButton_Click" />
   
 

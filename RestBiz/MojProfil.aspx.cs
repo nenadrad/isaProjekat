@@ -115,9 +115,23 @@ namespace RestBiz
         {
             string searchInput = SearchInput.Text;
             List<Korisnik> results = new List<Korisnik>();
+            string userEmail = System.Web.HttpContext.Current.User.Identity.Name;
             using (var ctx = new RestBizContext())
             {
-                results = (from k in ctx.Korisnici where (k.Ime.Contains(searchInput) || k.Prezime.Contains(searchInput)) select k).OrderBy(k => k.Ime).ThenBy(k => k.Prezime).ToList<Korisnik>();
+                var currentUser = (from k in ctx.Korisnici where k.Email == userEmail select k).FirstOrDefault();
+                var friends = currentUser.Prijatelji.ToList<Korisnik>();
+                if (friends.Count == 0)
+                {
+                    ContentPlaceHolder ContentPlaceHolder1 = (ContentPlaceHolder)Page.Master.FindControl("ContentPlaceHolder1");
+                    HtmlGenericControl friendsTable = (HtmlGenericControl)ContentPlaceHolder1.FindControl("friendsTableDiv");
+                    friendsTable.Attributes.Add("style", "display: none");
+                }
+                else
+                {
+                    PrijateljiKorisnika.DataSource = friends;
+                    PrijateljiKorisnika.DataBind();
+                }
+                results = (from k in ctx.Korisnici where (k.Ime.Contains(searchInput) || k.Prezime.Contains(searchInput)) select k).OrderBy(k => k.Ime).ThenBy(k => k.Prezime).ToList().Except(friends).ToList();   
             }
 
             if (results != null && results.Count > 0)
@@ -135,31 +149,28 @@ namespace RestBiz
             Korisnik prijatelj = (Korisnik)e.Item.DataItem;
             string Id = prijatelj.KorisnikId.ToString();
             HtmlAnchor buttonCell = (HtmlAnchor)e.Item.FindControl("buttonCell");
-            bool friends = false;
-            string userEmail = System.Web.HttpContext.Current.User.Identity.Name;
+
+            buttonCell.Attributes.Add("class", "pure-button pure-button-primary");
+            buttonCell.InnerText = "Dodaj za prijatelja";
+            string _params = Id + ", " + e.Item.ItemIndex.ToString();
+            buttonCell.HRef = "javascript:addFriend(" + _params + ")"; 
+        }
+
+        protected void btnSample_Click(object sender, EventArgs e)
+        {
+
+            ContentPlaceHolder ContentPlaceHolder1 = (ContentPlaceHolder)Page.Master.FindControl("ContentPlaceHolder1");
+            HtmlGenericControl friendsTable = (HtmlGenericControl)ContentPlaceHolder1.FindControl("friendsTableDiv");
+            friendsTable.Attributes.Remove("style");
+            friendsTable.Attributes.Add("style", "float: right");
 
             using (var ctx = new RestBizContext())
             {
-                var korisnik = (from k in ctx.Korisnici where k.Email == userEmail select k).FirstOrDefault<Korisnik>();
-                if (korisnik.Prijatelji.Select(k => k.KorisnikId).Contains(prijatelj.KorisnikId))
-                    friends = true;
-                else
-                    friends = false;
-            }
+                var currentUser = (from k in ctx.Korisnici where k.Email == UserEmail select k).FirstOrDefault();
+                var friends = currentUser.Prijatelji.ToList<Korisnik>();
+                PrijateljiKorisnika.DataSource = friends;
+                PrijateljiKorisnika.DataBind();
 
-            if (!friends)
-            {
-                buttonCell.Attributes.Add("class", "pure-button pure-button-primary");
-                buttonCell.InnerText = "Dodaj za prijatelja";
-                string _params = Id + ", " + e.Item.ItemIndex.ToString();
-                buttonCell.HRef = "javascript:addFriend(" + _params + ")";
-            }
-            else
-            {
-                buttonCell.Attributes.Add("class", "pure-button");
-                buttonCell.InnerText = "Ukloni iz prijatelja";
-                string _params = Id + ", " + e.Item.ItemIndex.ToString();
-                buttonCell.HRef = "javascript:removeFriend(" + _params + ")";
             }
         }
     }

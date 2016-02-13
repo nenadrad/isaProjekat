@@ -107,6 +107,14 @@ function addFriend(friendId, index) {
             buttonCell.setAttribute('href', href);
             buttonCell.innerText = "Ukloni iz prijatelja";
 
+            document.getElementById("ContentPlaceHolder1_btnSample").click();
+
         }
     });
+}
+
+function enterEvent(e) {
+    if (e.keyCode == 13) {
+        __doPostBack('<%=SearchButton.ClientID%>', "");
+    }
 }
