@@ -16,10 +16,10 @@ namespace RestBiz
         {
             if (!Page.IsPostBack)
             {
-                /*using (RestBizContext ctx = new RestBizContext())
+                using (RestBizContext ctx = new RestBizContext())
                 {
                     new RestBizDBInitializer().InitializeDatabase(ctx);
-                }*/
+                }
 
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {

@@ -16,6 +16,9 @@ namespace RestBiz.DataLayer
 
         public DbSet<Korisnik> Korisnici { get; set; }
         public DbSet<AktivacijaKorisnika> AktivacijeKorisnika { get; set; }
+        public DbSet<Restoran> Restorani { get; set; }
+        public DbSet<Jelovnik> Jelovnici { get; set; }
+        public DbSet <StavkaJelovnika> StavkeJelovnika { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -29,6 +32,7 @@ namespace RestBiz.DataLayer
                         cs.ToTable("Prijatelji");
                     });
 
+            modelBuilder.Entity<StavkaJelovnika>().Property(c => c.Cena).HasPrecision(5, 2);
 
             base.OnModelCreating(modelBuilder);
         }
