@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestBiz.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,6 +15,13 @@ namespace RestBiz
             if (!IsPostBack)
             {
                 ((Site)this.Master).MarkAsSelected("RestoraniLink");
+
+                using(var ctx = new RestBizContext())
+                {
+                    RestoraniRepeater.DataSource = ctx.Restorani.ToList();
+                    RestoraniRepeater.DataBind();
+
+                }
             }
         }
     }

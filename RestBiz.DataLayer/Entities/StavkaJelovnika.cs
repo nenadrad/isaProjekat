@@ -14,12 +14,23 @@ namespace RestBiz.DataLayer.Entities
         {
         }
 
+        public StavkaJelovnika(string naziv, string opis, decimal cena)
+        {
+            Naziv = naziv;
+            Opis = opis;
+            Cena = cena;
+        }
+
         [Key]
         public int StavkaId { get; set; }
 
         [Required]
         [MaxLength(20)]
         public string Naziv { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string Opis { get; set; }
 
         public decimal Cena { get; set; }
 
