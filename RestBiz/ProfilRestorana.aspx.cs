@@ -111,6 +111,24 @@ namespace RestBiz
             return retVal;
         }
 
+        [WebMethod]
+        public static string Remove(int id, int idRest)
+        {
+            string retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(0, null));
+
+            using(var ctx = new RestBizContext())
+            {
+                var itemToRemove = ctx.StavkeJelovnika.Find(id);
+                ctx.Restorani.Find(idRest).Jelovnik.Stavke.Remove(itemToRemove);
+
+                ctx.SaveChanges();
+
+                retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(1, itemToRemove));
+            }
+
+            return retVal;
+        }
+
         #endregion
 
         protected void hiddenButton_Click(object sender, EventArgs e)

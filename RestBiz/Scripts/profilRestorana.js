@@ -125,3 +125,30 @@ function snimiNovi() {
 
 }
 
+function remove(id) {
+
+    var value = JSON.stringify({
+        id: id,
+        idRest: $("#idRestorana").val()
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "ProfilRestorana.aspx/Remove",
+        data: value,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            var response = JSON.parse(data.d);
+            if (response.status == 0)
+                toastr.error("Greška pri uklanjanju stavke iz jelovnika.");
+            else {
+                toastr.success("Stavka jelovnika uspešno uklonjena.");
+
+                $("#tr" + id).remove();
+            }
+            //toastr.success("obrisano");
+        }
+    });
+}
+
