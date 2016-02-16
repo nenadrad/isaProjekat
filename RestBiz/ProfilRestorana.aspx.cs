@@ -129,6 +129,32 @@ namespace RestBiz
             return retVal;
         }
 
+        [WebMethod]
+        public static string EditRest(int id, string naziv, string opis)
+        {
+            string retVal = "";
+
+            using(var ctx = new RestBizContext())
+            {
+                var restoran = ctx.Restorani.Find(id);
+                if(restoran != null)
+                {
+                    restoran.Naziv = naziv;
+                    restoran.Opis = opis;
+
+                    ctx.SaveChanges();
+
+                    retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(1, null));
+                }
+                else
+                {
+                    retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(0, null));
+                }
+            }
+ 
+            return retVal;
+        }
+
         #endregion
 
         protected void hiddenButton_Click(object sender, EventArgs e)

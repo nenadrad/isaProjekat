@@ -78,6 +78,7 @@ function dodajStavku() {
     $("#trId").append("<td id='descCellNew'> <input id='newDesc' type='text' /> </td>");
     $("#trId").append("<td id='priceCellNew'> <input id='newPrice' type='text' /> </td>");
     $("#trId").append("<td> <a id='buttonSnimi' href ='javascript:snimiNovi()' class='pure-button' >Snimi</a> </td>");
+    $("#trId").append("<td> <a id='buttonUkloni' href ='#' class='pure-button pure-button-disabled' >Ukloni</a> </td>");
 
     $("#trId").attr("id", "trIdOld");
 
@@ -117,7 +118,10 @@ function snimiNovi() {
                 $("#priceCellNew").attr('id', 'priceCell' + response.retVal.StavkaId);
                 $("#buttonSnimi").attr('id', 'enableEditBtn' + response.retVal.StavkaId);
 
-                $("#trIdOld").attr('id', 'trId' + response.retVal.StavkaId);
+                $("#trIdOld").attr('id', 'tr' + response.retVal.StavkaId);
+
+                $("#buttonUkloni").attr('href', 'javascript:remove(' + response.retVal.StavkaId + ')');
+                $("#buttonUkloni").attr('class', 'pure-button');
 
             }
         }
@@ -147,8 +151,53 @@ function remove(id) {
 
                 $("#tr" + id).remove();
             }
-            //toastr.success("obrisano");
+           
         }
     });
+}
+
+function editRest() {
+
+    document.getElementById("name").readOnly = false;
+    document.getElementById("desc").readOnly = false;
+
+    $("#editRestBtn").html("Snimi");
+    $("#editRestBtn").attr('href', 'javascript:saveChanges()');
+
+}
+
+function saveChanges() {
+
+    values = JSON.stringify({
+        id: $("#idRestorana").val(),
+        naziv: $("#name").val(),
+        opis: $("#desc").val()
+
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "ProfilRestorana.aspx/EditRest",
+        data: values,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            var response = JSON.parse(data.d);
+            if (response.status == 0)
+                toastr.error("Greška pri izmeni podataka restorana.");
+            else {
+                toastr.success("Podaci uspešno izmenjeni.");
+
+                document.getElementById("name").readOnly = true;
+                document.getElementById("desc").readOnly = true;
+
+                $("#editRestBtn").html("Izmeni");
+                $("#editRestBtn").attr('href', 'javascript:editRest()');
+            }
+
+        }
+    });
+
+    
 }
 
