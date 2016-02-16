@@ -32,7 +32,7 @@ namespace RestBiz.DataLayer
                         cs.ToTable("Prijatelji");
                     });
 
-            modelBuilder.Entity<StavkaJelovnika>().Property(c => c.Cena).HasPrecision(5, 2);
+            modelBuilder.Entity<StavkaJelovnika>().Property(c => c.Cena).HasPrecision(10, 2);
 
             base.OnModelCreating(modelBuilder);
         }
