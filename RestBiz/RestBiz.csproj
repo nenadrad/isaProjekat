@@ -73,6 +73,7 @@
   <ItemGroup>
     <Content Include="Home.aspx" />
     <Content Include="Info.aspx" />
+    <Content Include="KonfiguracijaSedenja.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="MojProfil.aspx" />
     <Content Include="Prijatelji.aspx" />
@@ -106,6 +107,13 @@
     </Compile>
     <Compile Include="Info.aspx.designer.cs">
       <DependentUpon>Info.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="KonfiguracijaSedenja.aspx.cs">
+      <DependentUpon>KonfiguracijaSedenja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="KonfiguracijaSedenja.aspx.designer.cs">
+      <DependentUpon>KonfiguracijaSedenja.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProfilRestorana.aspx.cs">
       <DependentUpon>ProfilRestorana.aspx</DependentUpon>
