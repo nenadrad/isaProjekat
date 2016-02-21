@@ -51,7 +51,9 @@ namespace RestBiz.DataLayer
 
         Jelovnik jelovnik1 = new Jelovnik();
         Jelovnik jelovnik2 = new Jelovnik();
+
         
+
 
         protected override void Seed(RestBizContext context)
         {

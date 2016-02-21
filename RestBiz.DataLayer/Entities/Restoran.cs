@@ -26,5 +26,7 @@ namespace RestBiz.DataLayer.Entities
 
         public virtual Jelovnik Jelovnik { get; set; }
 
+        public virtual KonfiguracijaSedenja KonfiguracijaSedenja { get; set; }
+
     }
 }

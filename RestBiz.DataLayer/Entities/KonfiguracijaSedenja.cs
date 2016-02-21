@@ -7,19 +7,19 @@ using System.Text;
 
 namespace RestBiz.DataLayer.Entities
 {
-    [Table("Jelovnici")]
-    public class Jelovnik
+    [Table("KonfiguracijeSedenja")]
+    public class KonfiguracijaSedenja
     {
-        public Jelovnik()
+        public KonfiguracijaSedenja()
         {
 
         }
 
         [Key, ForeignKey("Restoran")]
-        public int RestoranId { get; set; }
+        public int IdRestorana { get; set; }
 
         public virtual Restoran Restoran { get; set; }
 
-        public virtual ICollection<StavkaJelovnika> Stavke { get; set; }
+        public virtual ICollection<PozicijaStola> Stolovi { get; set; }
     }
 }

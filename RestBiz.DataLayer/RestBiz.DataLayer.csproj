@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="Entities\AktivacijaKorisnika.cs" />
     <Compile Include="Entities\Jelovnik.cs" />
+    <Compile Include="Entities\KonfiguracijaSedenja.cs" />
+    <Compile Include="Entities\PozicijaStola.cs" />
     <Compile Include="Entities\StavkaJelovnika.cs" />
     <Compile Include="Entities\Korisnik.cs" />
     <Compile Include="Entities\Restoran.cs" />

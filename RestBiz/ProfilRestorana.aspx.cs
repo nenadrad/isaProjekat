@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 namespace RestBiz
@@ -42,7 +43,15 @@ namespace RestBiz
 
                     JelovnikRepeater.DataSource = restoran.Jelovnik.Stavke.ToList();
                     JelovnikRepeater.DataBind();
+
+                    if (ctx.KonfiguracijeSedenja.Select(k => k.IdRestorana).Contains(RestoranId))
+                        ButtonConf.Visible = false;
+                    else
+                        ButtonConf.NavigateUrl = "KonfiguracijaSedenja.aspx?idRest=" + idRestorana;
+
                 }
+
+                
             }
         }
 
