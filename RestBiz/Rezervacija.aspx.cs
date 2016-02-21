@@ -46,5 +46,25 @@ namespace RestBiz
             }
 
         }
+
+        protected void NextButton1_Click(object sender, EventArgs e)
+        {
+            RasporediStolove();
+            RasporedStolova.Visible = true;
+            NextButton1.Visible = false;
+        }
+
+        private void RasporediStolove()
+        {
+            RowsRepeater.DataSource = new int[5];
+            RowsRepeater.DataBind();
+        }
+
+        protected void RowsRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            Repeater ColsRepeater = (Repeater)e.Item.FindControl("ColsRepeater");
+            ColsRepeater.DataSource = new int[8];
+            ColsRepeater.DataBind();
+        }
     }
 }
