@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Rezervacija.aspx.cs" Inherits="RestBiz.Rezervacija" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Rezervacija.aspx.cs" Inherits="RestBiz.Rezervacija" ClientIDMode="Static" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <link href="Styles/jquery-ui.css" rel="stylesheet">
@@ -9,12 +9,17 @@
             font-size: 150%;
         }
 
-        .button-selected {
-            background: rgb(223, 117, 20); /* this is an orange */
-        }
-
         .stolovi {
             width: 75px;
+            border: 2px solid white;
+        }
+
+        .free-table {
+            background: rgb(28, 184, 65); 
+        }
+
+        .selected {
+            border : 2px solid red;
         }
 
     </style>
@@ -23,10 +28,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+    <script type="text/javascript" src="Scripts/rezervacija.js"></script>
+
     <script>
 
         $(function () {
-            $("#date").datepicker();
+            $("#Date").datepicker();
         });
     </script>
 
@@ -41,13 +48,12 @@
         </div>
         <div class="pure-control-group">
             <label for="Date">Datum</label>
-            <input type="text" id="date">
+            <input type="text" id="Date" runat="server">
         </div>
         <div class="pure-control-group">
             <label for="Time">Trajanje</label>
             <span>
-                <asp:TextBox ID="Time" runat="server" type="number" min="0" max="5"></asp:TextBox>
-                <label style="margin-left: -120px;">sata</label>
+                <asp:TextBox ID="Time" runat="server" type="number" min="1" max="5"></asp:TextBox>&nbsp;&nbsp; sata
             </span>
         </div>
     </fieldset>
@@ -59,13 +65,18 @@
                     <tr>
                         <asp:Repeater ID="ColsRepeater" runat="server">
                             <ItemTemplate>
-                                <td style="padding: 6px;"><a class="pure-button button-xlarge stolovi">&nbsp</a></td>
+                                <td style="padding: 6px;"><a class="pure-button button-xlarge stolovi" runat="server" id="sto">&nbsp</a></td>
                             </ItemTemplate>
                         </asp:Repeater>
                     </tr>
                 </ItemTemplate>
             </asp:Repeater>
         </table>
+
+        <%--<div class="pure-controls">
+            <asp:Button ID="NextButton2" runat="server" Text="Dalje" CssClass="pure-button pure-button-primary" />
+        </div>--%>
+
     </asp:Panel>
 
     <div class="pure-controls">
