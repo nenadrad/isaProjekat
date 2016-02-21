@@ -11,7 +11,7 @@
             <thead>
                 <tr>
                     <th>Naziv</th>
-                    <%--<th>Dodaj/obriši</th>--%>
+                    <th>Rezervacija</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,7 +19,7 @@
                     <ItemTemplate>
                         <tr>
                             <td><a class="pure-button pure-button-hover" href = "ProfilRestorana.aspx?id=<%# Eval("RestoranId") %>"><%# Eval("Naziv") %></a></td>
-                            <%--<td><a runat="server" id="buttonCell" href="#"></a></td>--%>
+                            <td align="center"><a class="pure-button pure-button-primary" href = "Rezervacija.aspx?idRest=<%# Eval("RestoranId") %>"></a></td>
                         </tr>
                         <input type="hidden"  value="<%# Eval("RestoranId") %>"/>
                     </ItemTemplate>

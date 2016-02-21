@@ -80,12 +80,16 @@
     <Content Include="ProfilRestorana.aspx" />
     <Content Include="Registracija.aspx" />
     <Content Include="Restorani.aspx" />
+    <Content Include="Rezervacija.aspx" />
     <Content Include="Scripts\index.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\konfiguracijaSedenja.js" />
     <Content Include="Scripts\mojProfil.js" />
     <Content Include="Scripts\prijatelji.js" />
     <Content Include="Scripts\profilRestorana.js" />
     <Content Include="Scripts\registracija.js" />
+    <Content Include="Styles\jquery-ui.css" />
     <Content Include="Styles\side-menu.css" />
     <Content Include="Styles\Site.css" />
     <Content Include="Global.asax" />
@@ -122,6 +126,13 @@
     </Compile>
     <Compile Include="ProfilRestorana.aspx.designer.cs">
       <DependentUpon>ProfilRestorana.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rezervacija.aspx.cs">
+      <DependentUpon>Rezervacija.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rezervacija.aspx.designer.cs">
+      <DependentUpon>Rezervacija.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utills\AjaxCallStatus.cs" />
     <Compile Include="Global.asax.cs">
