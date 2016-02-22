@@ -1,9 +1,12 @@
-﻿using RestBiz.DataLayer;
+﻿using RestBiz.Ajax;
+using RestBiz.DataLayer;
 using RestBiz.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -73,6 +76,18 @@ namespace RestBiz
             }
         }
 
+        private List<int> IzabraniStolovi
+        {
+            get
+            {
+                return (List< int>)ViewState["IzabraniStolovi"];
+            }
+            set
+            {
+                ViewState["IzabraniStolovi"] = value;
+            }
+        }
+
         private HtmlInputText DateInput
         {
             get
@@ -85,7 +100,33 @@ namespace RestBiz
 
             }
         }
-     
+
+        private HtmlInputText DateTimeInput
+        {
+            get
+            {
+                ContentPlaceHolder ContentPlaceHolder1 = (ContentPlaceHolder)Page.Master.FindControl("ContentPlaceHolder1");
+                return (HtmlInputText)ContentPlaceHolder1.FindControl("DateTime");
+            }
+            set
+            {
+
+            }
+        }
+
+        /*private HtmlGenericControl RasporedStolovaDiv
+        {
+            get
+            {
+                ContentPlaceHolder ContentPlaceHolder1 = (ContentPlaceHolder)Page.Master.FindControl("ContentPlaceHolder1");
+                return (HtmlGenericControl)ContentPlaceHolder1.FindControl("RasporedStolovaDiv");
+            }
+            set
+            {
+
+            }
+        }*/
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -104,15 +145,17 @@ namespace RestBiz
         protected void NextButton1_Click(object sender, EventArgs e)
         {
             RasporediStolove();
-            RasporedStolova.Visible = true;
-           
+            RasporedStolovaDiv.Attributes.Remove("style");          
 
             Dictionary<string, string> form = new Dictionary<string, string>();
             form["Restoran"] = Name.Text;
             form["Datum"] = DateInput.Value;
+            form["Vreme"] = DateTimeInput.Value;
             form["Trajanje"] = Time.Text;
 
             Forma = form;
+
+            NextButton1.Visible = false;
         }
 
         private void RasporediStolove()
@@ -164,20 +207,28 @@ namespace RestBiz
 
             Name.Text = form["Restoran"];
             DateInput.Value = form["Datum"];
+            DateTimeInput.Value = form["Vreme"];
             Time.Text = form["Trajanje"];
 
-            NextButton1.Click -= NextButton1_Click;
-            NextButton1.Click += new EventHandler(NextButton1_Click2);
+            /*NextButton1.Click -= NextButton1_Click;
+            NextButton1.Click += new EventHandler(NextButton1_Click2);*/
         }
 
-        protected void NextButton1_Click2(object sender, EventArgs e)
+        /*protected void NextButton1_Click2(object sender, EventArgs e)
         {
-            RasporedStolova.Visible = false;
+
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "GetIzabraniStolovi()", true);
+
             InvitePanel.Visible = true;
-        }
+
+            NextButton1.Visible = false;
+
+        }*/
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
+            InviteDiv.Attributes.Remove("style");
+
             string searchInput = SearchInput.Text;
             List<Korisnik> results = new List<Korisnik>();
             string userEmail = System.Web.HttpContext.Current.User.Identity.Name;
@@ -185,19 +236,6 @@ namespace RestBiz
             {
                 var currentUser = (from k in ctx.Korisnici where k.Email == userEmail select k).FirstOrDefault();
                 var friends = currentUser.Prijatelji.ToList<Korisnik>();
-                /*if (friends.Count == 0)
-                {
-                    ContentPlaceHolder ContentPlaceHolder1 = (ContentPlaceHolder)Page.Master.FindControl("ContentPlaceHolder1");
-                    HtmlGenericControl friendsTable = (HtmlGenericControl)ContentPlaceHolder1.FindControl("friendsTableDiv");
-                    friendsTable.Attributes.Add("style", "display: none");
-                }
-                else
-                {
-                    PrijateljiKorisnika.DataSource = friends;
-                    PrijateljiKorisnika.DataBind();
-                }
-                results = (from k in ctx.Korisnici where (k.Ime.Contains(searchInput) || k.Prezime.Contains(searchInput)) select k).OrderBy(k => k.Ime).ThenBy(k => k.Prezime).ToList().Except(friends).ToList();
-                results = (from k in ctx.Korisnici.Find(currentUser.KorisnikId).Prijatelji where (k.Ime.Contains(searchInput) || k.Prezime.Contains(searchInput)) select k).OrderBy(k => k.Ime).ThenBy(k => k.Prezime).ToList();*/
                 foreach (Korisnik k in friends)
                     if (k.Ime.ToLower().Contains(searchInput.ToLower()) || k.Prezime.ToLower().Contains(searchInput.ToLower()))
                         results.Add(k);
@@ -220,10 +258,28 @@ namespace RestBiz
             string Id = prijatelj.KorisnikId.ToString();
             HtmlAnchor buttonCell = (HtmlAnchor)e.Item.FindControl("buttonCell");
 
+            HtmlInputHidden hidden = (HtmlInputHidden)e.Item.FindControl("userId");
+            hidden.ID = Id.ToString();
+            hidden.Value = "user"+0.ToString();
+
             buttonCell.Attributes.Add("class", "pure-button pure-button-primary");
             buttonCell.InnerText = "Pozovi";
-            string _params = Id + ", " + e.Item.ItemIndex.ToString();
+            buttonCell.ID = "btnCell" + Id;
+            string _params = Id;
             buttonCell.HRef = "javascript:inviteFriend(" + _params + ")";
         }
+
+        [WebMethod(EnableSession = true)]
+        public static string SaveTables(List<int> stolovi)
+        {
+            string retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(0, "Greska"));
+
+            HttpContext.Current.Session["Stolovi"] = stolovi;
+
+            retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(1, HttpContext.Current.Session["Stolovi"]));
+
+            return retVal;
+        }
+
     }
 }

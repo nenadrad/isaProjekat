@@ -84,6 +84,7 @@
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery.timepicker.js" />
     <Content Include="Scripts\konfiguracijaSedenja.js" />
     <Content Include="Scripts\mojProfil.js" />
     <Content Include="Scripts\prijatelji.js" />
@@ -91,6 +92,7 @@
     <Content Include="Scripts\registracija.js" />
     <Content Include="Scripts\rezervacija.js" />
     <Content Include="Styles\jquery-ui.css" />
+    <Content Include="Styles\jquery.timepicker.css" />
     <Content Include="Styles\side-menu.css" />
     <Content Include="Styles\Site.css" />
     <Content Include="Global.asax" />
@@ -193,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Styles\images\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RestBiz.DataLayer\RestBiz.DataLayer.csproj">

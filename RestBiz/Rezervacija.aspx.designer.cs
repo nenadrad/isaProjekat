@@ -31,6 +31,15 @@ namespace RestBiz {
         protected global::System.Web.UI.HtmlControls.HtmlInputText Date;
         
         /// <summary>
+        /// DateTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText DateTime;
+        
+        /// <summary>
         /// Time control.
         /// </summary>
         /// <remarks>
@@ -40,13 +49,22 @@ namespace RestBiz {
         protected global::System.Web.UI.WebControls.TextBox Time;
         
         /// <summary>
-        /// RasporedStolova control.
+        /// NextButton1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel RasporedStolova;
+        protected global::System.Web.UI.WebControls.Button NextButton1;
+        
+        /// <summary>
+        /// RasporedStolovaDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RasporedStolovaDiv;
         
         /// <summary>
         /// RowsRepeater control.
@@ -58,13 +76,13 @@ namespace RestBiz {
         protected global::System.Web.UI.WebControls.Repeater RowsRepeater;
         
         /// <summary>
-        /// InvitePanel control.
+        /// InviteDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel InvitePanel;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InviteDiv;
         
         /// <summary>
         /// SearchInput control.
@@ -103,12 +121,12 @@ namespace RestBiz {
         protected global::System.Web.UI.WebControls.Repeater KorisniciRepeater;
         
         /// <summary>
-        /// NextButton1 control.
+        /// ConfirmButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button NextButton1;
+        protected global::System.Web.UI.WebControls.Button ConfirmButton;
     }
 }
