@@ -125,7 +125,7 @@
 
             <div class="pure-controls">
                 <%--<a href ="javascript:snimi()" class="pure-button pure-button-primary">Potvrdi</a>--%>
-                <asp:Button ID="ConfirmButton" runat="server" Text="Potvrdi" CssClass="pure-button pure-button-primary" />
+                <asp:Button ID="ConfirmButton" runat="server" Text="Potvrdi" CssClass="pure-button pure-button-primary" OnClick="ConfirmButton_Click"/>
             </div>
 
         </div>

@@ -36,7 +36,23 @@ function inviteFriend(id) {
     $("#btnCell" + id).toggleClass("pure-button-primary");
     $("#btnCell" + id).html("Ukloni iz poziva");
     $("#btnCell" + id).attr('href', 'javascript:removeInvite(' + id + ')');
-    $("#user" + id).val("1");
+    //$("#user" + id).val("1");
+
+    var values = JSON.stringify({
+        id : id
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "Rezervacija.aspx/InviteFriend",
+        data: values,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            /*var response = JSON.parse(data.d);
+            alert(response.retVal);*/
+        }
+    });
 
 }
 
@@ -45,7 +61,23 @@ function removeInvite(id) {
     $("#btnCell" + id).toggleClass("pure-button-primary");
     $("#btnCell" + id).html("Pozovi");
     $("#btnCell" + id).attr('href', 'javascript:inviteFriend(' + id + ')');
-    $("#user" + id).val("0");
+    //$("#user" + id).val("0");
+
+    var values = JSON.stringify({
+        id: id
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "Rezervacija.aspx/RemoveInvite",
+        data: values,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            /*var response = JSON.parse(data.d);
+            alert(response.retVal);*/
+        }
+    });
 
 }
 

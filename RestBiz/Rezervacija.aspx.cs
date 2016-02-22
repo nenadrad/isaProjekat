@@ -114,19 +114,6 @@ namespace RestBiz
             }
         }
 
-        /*private HtmlGenericControl RasporedStolovaDiv
-        {
-            get
-            {
-                ContentPlaceHolder ContentPlaceHolder1 = (ContentPlaceHolder)Page.Master.FindControl("ContentPlaceHolder1");
-                return (HtmlGenericControl)ContentPlaceHolder1.FindControl("RasporedStolovaDiv");
-            }
-            set
-            {
-
-            }
-        }*/
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -258,16 +245,31 @@ namespace RestBiz
             string Id = prijatelj.KorisnikId.ToString();
             HtmlAnchor buttonCell = (HtmlAnchor)e.Item.FindControl("buttonCell");
 
-            HtmlInputHidden hidden = (HtmlInputHidden)e.Item.FindControl("userId");
-            hidden.ID = Id.ToString();
-            hidden.Value = "user"+0.ToString();
+            /*HtmlInputHidden hidden = (HtmlInputHidden)e.Item.FindControl("userId");
+            hidden.ID = "user"+Id.ToString();
+            hidden.Value = 0.ToString();*/
 
-            buttonCell.Attributes.Add("class", "pure-button pure-button-primary");
-            buttonCell.InnerText = "Pozovi";
-            buttonCell.ID = "btnCell" + Id;
-            string _params = Id;
-            buttonCell.HRef = "javascript:inviteFriend(" + _params + ")";
+            List<int> InvitedIds = (List<int>)HttpContext.Current.Session["InvitedIds"];
+
+            if (InvitedIds != null && InvitedIds.Contains(prijatelj.KorisnikId))
+            {
+                buttonCell.Attributes.Add("class", "pure-button");
+                buttonCell.InnerText = "Ukloni iz poziva";
+                buttonCell.ID = "btnCell" + Id;
+                string _params = Id;
+                buttonCell.HRef = "javascript:removeInvite(" + _params + ")";
+            }
+            else
+            {
+                buttonCell.Attributes.Add("class", "pure-button pure-button-primary");
+                buttonCell.InnerText = "Pozovi";
+                buttonCell.ID = "btnCell" + Id;
+                string _params = Id;
+                buttonCell.HRef = "javascript:inviteFriend(" + _params + ")";
+            }
         }
+
+        #region WebMethods
 
         [WebMethod(EnableSession = true)]
         public static string SaveTables(List<int> stolovi)
@@ -281,5 +283,60 @@ namespace RestBiz
             return retVal;
         }
 
+        [WebMethod(EnableSession = true)]
+        public static string InviteFriend(int id)
+        {
+            string retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(0, "Greska"));
+
+            if (HttpContext.Current.Session["InvitedIds"] == null)
+            {
+                List<int> InvitedIds = new List<int>();
+                InvitedIds.Add(id);
+                HttpContext.Current.Session["InvitedIds"] = InvitedIds;
+                retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(1, InvitedIds));
+            }
+            else
+            {
+                List<int> InvitedIds = (List<int>)HttpContext.Current.Session["InvitedIds"];
+                InvitedIds.Add(id);
+                HttpContext.Current.Session["InvitedIds"] = InvitedIds;
+                retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(0, InvitedIds));
+            }
+
+            return retVal; 
+        }
+
+        [WebMethod(EnableSession = true)]
+        public static string RemoveInvite(int id)
+        {
+            string retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(0, "Greska"));
+
+            if (HttpContext.Current.Session["InvitedIds"] != null)
+            {
+                List<int> InvitedIds = (List<int>)HttpContext.Current.Session["InvitedIds"];
+                InvitedIds.Remove(id);
+                HttpContext.Current.Session["InvitedIds"] = InvitedIds;
+                retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(0, InvitedIds));
+            }
+            
+
+            return retVal;
+        }
+
+        #endregion
+
+
+
+        protected void ConfirmButton_Click(object sender, EventArgs e)
+        {
+            /*foreach(RepeaterItem item in KorisniciRepeater.Items)
+            {
+                foreach(Control c in item.Controls)
+                    if(c is HtmlInputHidden)
+                    {
+                        HtmlInputHidden input = (HtmlInputHidden)c;
+                    }
+            }*/
+        }
     }
 }
