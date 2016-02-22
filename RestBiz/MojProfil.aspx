@@ -84,7 +84,7 @@
                 <thead>
                     <tr>
                         <th>Ime i prezime</th>
-                        <th>Dodaj/obriši</th>
+                        <th>Dodaj</th>
                     </tr>
                 </thead>
                 <tbody>

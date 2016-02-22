@@ -105,7 +105,7 @@ namespace RestBiz
         {
             RasporediStolove();
             RasporedStolova.Visible = true;
-            //NextButton1.Visible = false;
+           
 
             Dictionary<string, string> form = new Dictionary<string, string>();
             form["Restoran"] = Name.Text;
@@ -165,7 +165,65 @@ namespace RestBiz
             Name.Text = form["Restoran"];
             DateInput.Value = form["Datum"];
             Time.Text = form["Trajanje"];
+
+            NextButton1.Click -= NextButton1_Click;
+            NextButton1.Click += new EventHandler(NextButton1_Click2);
         }
 
+        protected void NextButton1_Click2(object sender, EventArgs e)
+        {
+            RasporedStolova.Visible = false;
+            InvitePanel.Visible = true;
+        }
+
+        protected void SearchButton_Click(object sender, EventArgs e)
+        {
+            string searchInput = SearchInput.Text;
+            List<Korisnik> results = new List<Korisnik>();
+            string userEmail = System.Web.HttpContext.Current.User.Identity.Name;
+            using (var ctx = new RestBizContext())
+            {
+                var currentUser = (from k in ctx.Korisnici where k.Email == userEmail select k).FirstOrDefault();
+                var friends = currentUser.Prijatelji.ToList<Korisnik>();
+                /*if (friends.Count == 0)
+                {
+                    ContentPlaceHolder ContentPlaceHolder1 = (ContentPlaceHolder)Page.Master.FindControl("ContentPlaceHolder1");
+                    HtmlGenericControl friendsTable = (HtmlGenericControl)ContentPlaceHolder1.FindControl("friendsTableDiv");
+                    friendsTable.Attributes.Add("style", "display: none");
+                }
+                else
+                {
+                    PrijateljiKorisnika.DataSource = friends;
+                    PrijateljiKorisnika.DataBind();
+                }
+                results = (from k in ctx.Korisnici where (k.Ime.Contains(searchInput) || k.Prezime.Contains(searchInput)) select k).OrderBy(k => k.Ime).ThenBy(k => k.Prezime).ToList().Except(friends).ToList();
+                results = (from k in ctx.Korisnici.Find(currentUser.KorisnikId).Prijatelji where (k.Ime.Contains(searchInput) || k.Prezime.Contains(searchInput)) select k).OrderBy(k => k.Ime).ThenBy(k => k.Prezime).ToList();*/
+                foreach (Korisnik k in friends)
+                    if (k.Ime.ToLower().Contains(searchInput.ToLower()) || k.Prezime.ToLower().Contains(searchInput.ToLower()))
+                        results.Add(k);
+                
+            }
+
+            if (results != null && results.Count > 0)
+            {
+                ContentPlaceHolder ContentPlaceHolder1 = (ContentPlaceHolder)Page.Master.FindControl("ContentPlaceHolder1");
+                HtmlGenericControl friendsTable = (HtmlGenericControl)ContentPlaceHolder1.FindControl("friendsResults");
+                friendsTable.Attributes.Remove("style");
+                KorisniciRepeater.DataSource = results;
+                KorisniciRepeater.DataBind();
+            }
+        }
+
+        protected void KorisniciRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            Korisnik prijatelj = (Korisnik)e.Item.DataItem;
+            string Id = prijatelj.KorisnikId.ToString();
+            HtmlAnchor buttonCell = (HtmlAnchor)e.Item.FindControl("buttonCell");
+
+            buttonCell.Attributes.Add("class", "pure-button pure-button-primary");
+            buttonCell.InnerText = "Pozovi";
+            string _params = Id + ", " + e.Item.ItemIndex.ToString();
+            buttonCell.HRef = "javascript:inviteFriend(" + _params + ")";
+        }
     }
 }

@@ -79,6 +79,38 @@
 
     </asp:Panel>
 
+    <asp:Panel ID="InvitePanel" runat="server" Visible ="false">
+
+        <legend>Pozovi prijatelje</legend>
+        <asp:TextBox ID="SearchInput" runat="server" class="pure-input-rounded" onkeypress ="return enterEvent(event)"></asp:TextBox>
+        <asp:Button ID="SearchButton" runat="server" class="pure-button" Text="Pretraži" OnClick="SearchButton_Click" />
+
+        <div class="content-subhead">
+        <div>
+
+        <div id="friendsResults" runat="server" style="display: none">
+            <table class="pure-table pure-table-bordered">
+                <thead>
+                    <tr>
+                        <th>Ime i prezime</th>
+                        <th>Dodaj</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <asp:Repeater ID="KorisniciRepeater" runat="server" OnItemDataBound="KorisniciRepeater_ItemDataBound">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("ImePrezime") %></td>
+                                <td><a runat="server" id="buttonCell" href="#"></a></td>
+                            </tr>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </tbody>
+            </table>
+        </div>
+
+    </asp:Panel>
+
     <div class="pure-controls">
         <asp:Button ID="NextButton1" runat="server" Text="Dalje" CssClass="pure-button pure-button-primary" OnClick="NextButton1_Click" />
     </div>
