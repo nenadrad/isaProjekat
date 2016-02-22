@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using RestBiz.DataLayer.Entities;
 
 namespace RestBiz.DataLayer
 {
@@ -53,6 +54,8 @@ namespace RestBiz.DataLayer
                 ImePrezime = value;
             }
         }
+
+        public virtual ICollection<Rezervacija> Rezervacije { get; set;  }
 
         
     }

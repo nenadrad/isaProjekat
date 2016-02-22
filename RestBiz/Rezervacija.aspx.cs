@@ -326,17 +326,54 @@ namespace RestBiz
         #endregion
 
 
-
         protected void ConfirmButton_Click(object sender, EventArgs e)
         {
-            /*foreach(RepeaterItem item in KorisniciRepeater.Items)
+            using(var ctx = new RestBizContext())
             {
-                foreach(Control c in item.Controls)
-                    if(c is HtmlInputHidden)
+                RestBiz.DataLayer.Entities.Rezervacija rezervacija = new DataLayer.Entities.Rezervacija();
+                rezervacija.Stolovi = new List<PozicijaStola>();
+                rezervacija.Prijatelji = new List<Korisnik>();
+
+                List<int> stolovi = (List<int>)HttpContext.Current.Session["Stolovi"];
+                List<int> prijateljiIds = (List<int>)HttpContext.Current.Session["InvitedIds"];
+
+                foreach(int brojStola in stolovi)
+                {
+                    var pozicijaStola = (from p in ctx.Stolovi where p.KonfiguracijaSedenja.IdRestorana == IdRestorana && p.BrojStola == brojStola select p).FirstOrDefault();
+                    rezervacija.Stolovi.Add(pozicijaStola);
+                }
+
+                if (prijateljiIds != null)
+                {
+                    foreach (int prId in prijateljiIds)
                     {
-                        HtmlInputHidden input = (HtmlInputHidden)c;
+                        var prijatelj = ctx.Korisnici.Find(prId);
+                        rezervacija.Prijatelji.Add(prijatelj);
                     }
-            }*/
-        }
+                }
+
+                rezervacija.Restoran = ctx.Restorani.Find(IdRestorana);
+
+                string[] datumInputs = Forma["Datum"].Split('/');
+
+                string[] vremeInputs = Forma["Vreme"].Split(':');
+
+                DateTime Pocetak = new DateTime(Convert.ToInt32(datumInputs[2]), Convert.ToInt32(datumInputs[0]), Convert.ToInt32(datumInputs[1]), Convert.ToInt32(vremeInputs[0]), Convert.ToInt32(vremeInputs[1]), 0);
+                DateTime Zavrsetak = Pocetak.AddHours(Convert.ToInt32(Forma["Trajanje"]));
+
+                rezervacija.Pocetak = Pocetak;
+                rezervacija.Zavrsetak = Zavrsetak;
+
+                ctx.Rezervacije.Add(rezervacija);
+
+                ctx.SaveChanges();
+            }
+
+            RasporedStolovaDiv.Visible = false;
+            InviteDiv.Visible = false;
+            FormDiv.Visible = false;
+            MessageDiv.Visible = true;
+
+         }
     }
 }

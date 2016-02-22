@@ -13,6 +13,24 @@ namespace RestBiz {
     public partial class Rezervacija {
         
         /// <summary>
+        /// MessageDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MessageDiv;
+        
+        /// <summary>
+        /// FormDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FormDiv;
+        
+        /// <summary>
         /// Name control.
         /// </summary>
         /// <remarks>

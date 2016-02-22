@@ -21,6 +21,7 @@ namespace RestBiz.DataLayer
         public DbSet <StavkaJelovnika> StavkeJelovnika { get; set; }
         public DbSet <KonfiguracijaSedenja> KonfiguracijeSedenja { get; set; }
         public DbSet<PozicijaStola> Stolovi { get; set; }
+        public DbSet<Rezervacija> Rezervacije { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -35,6 +36,26 @@ namespace RestBiz.DataLayer
                     });
 
             modelBuilder.Entity<StavkaJelovnika>().Property(c => c.Cena).HasPrecision(10, 2);
+
+            modelBuilder.Entity<Rezervacija>()
+                .HasMany<Korisnik>(r => r.Prijatelji)
+                .WithMany(k => k.Rezervacije)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("RezervacijaId");
+                    cs.MapRightKey("KorisnikId");
+                    cs.ToTable("PozvaniPrijatelji");
+                });
+
+            modelBuilder.Entity<Rezervacija>()
+                .HasMany<PozicijaStola>(r => r.Stolovi)
+                .WithMany(p => p.Rezervacije)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("RezervacijaId");
+                    cs.MapRightKey("PozicijaId");
+                    cs.ToTable("RezervisaniStolovi");
+                });
 
             base.OnModelCreating(modelBuilder);
         }

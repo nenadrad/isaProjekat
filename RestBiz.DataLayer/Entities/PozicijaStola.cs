@@ -17,5 +17,7 @@ namespace RestBiz.DataLayer.Entities
         public int BrojStola { get; set; }
 
         public virtual KonfiguracijaSedenja KonfiguracijaSedenja { get; set; } 
+
+        public virtual ICollection<Rezervacija> Rezervacije { get; set; }
     }
 }

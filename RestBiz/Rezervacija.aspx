@@ -37,7 +37,7 @@
         });
 
         $(function () {
-            $('#DateTime').timepicker({ 'step': 15 });
+            $('#DateTime').timepicker({ 'step': 15, 'timeFormat': 'H:i:s', 'minTime': '10:00am', 'maxTime': '10:00pm', });
         });
 
     </script>
@@ -46,29 +46,38 @@
         <h2>Rezervacija</h2>
     </div>
 
-    <fieldset>
-        <div class="pure-control-group">
-            <label for="Name">Restoran</label>
-            <asp:TextBox ID="Name" runat="server" ReadOnly="true"></asp:TextBox>
-        </div>
-        <div class="pure-control-group">
-            <label for="Date">Datum</label>
-            <input type="text" id="Date" runat="server">
-        </div>
-        <div class="pure-control-group">
-            <label for="DateTime">Vreme</label>
-            <input type="text" id="DateTime" runat="server">
-        </div>
-        <div class="pure-control-group">
-            <label for="Time">Trajanje</label>
-            <span>
-                <asp:TextBox ID="Time" runat="server" type="number" min="1" max="5"></asp:TextBox>&nbsp;&nbsp; sata
-            </span>
-        </div>
-    </fieldset>
+    <div id="MessageDiv" runat="server" visible="false">
+        <p>
+            Rezervacija uspešna.
+        </p>
+    </div>
 
-    <div class="pure-controls">
-        <asp:Button ID="NextButton1" runat="server" Text="Dalje" CssClass="pure-button pure-button-primary" OnClick="NextButton1_Click" />
+    <div id="FormDiv" runat="server">
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="Name">Restoran</label>
+                <asp:TextBox ID="Name" runat="server" ReadOnly="true"></asp:TextBox>
+            </div>
+            <div class="pure-control-group">
+                <label for="Date">Datum</label>
+                <input type="text" id="Date" runat="server">
+            </div>
+            <div class="pure-control-group">
+                <label for="DateTime">Vreme</label>
+                <input type="text" id="DateTime" runat="server">
+            </div>
+            <div class="pure-control-group">
+                <label for="Time">Trajanje</label>
+                <span>
+                    <asp:TextBox ID="Time" runat="server" type="number" min="1" max="5"></asp:TextBox>&nbsp;&nbsp; sata
+                </span>
+            </div>
+        </fieldset>
+
+
+        <div class="pure-controls">
+            <asp:Button ID="NextButton1" runat="server" Text="Dalje" CssClass="pure-button pure-button-primary" OnClick="NextButton1_Click" />
+        </div>
     </div>
 
     <div id="RasporedStolovaDiv" runat="server"  style="padding-left:100px; display:none">
@@ -124,7 +133,6 @@
         </div>
 
             <div class="pure-controls">
-                <%--<a href ="javascript:snimi()" class="pure-button pure-button-primary">Potvrdi</a>--%>
                 <asp:Button ID="ConfirmButton" runat="server" Text="Potvrdi" CssClass="pure-button pure-button-primary" OnClick="ConfirmButton_Click"/>
             </div>
 

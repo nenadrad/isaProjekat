@@ -48,6 +48,9 @@ namespace RestBiz
                 case "neakt":
                     Message.Text = "Vaš nalog nije aktiviran. Aktivirajte nalog i pokušajte ponovo.";
                     break;
+                case "rez":
+                    Message.Text = "Rezervacija uspešna.";
+                    break;
             }
         }
 
