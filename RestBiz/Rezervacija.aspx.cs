@@ -10,6 +10,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using RestBiz.Utills;
 
 namespace RestBiz
 {
@@ -138,6 +139,11 @@ namespace RestBiz
             form["Trajanje"] = Time.Text;
 
             Forma = form;
+
+            Name.ReadOnly = true;
+            DateInput.Attributes.Add("readonly", "readonly");
+            DateTime.Attributes.Add("readonly", "readonly");
+            Time.ReadOnly = true;
 
             NextButton1.Visible = false;
 
@@ -353,7 +359,12 @@ namespace RestBiz
                 ctx.Rezervacije.Add(rezervacija);
 
                 ctx.SaveChanges();
+
+                new Invitation().SendInvitation(ctx, rezervacija);
             }
+
+            HttpContext.Current.Session["Stolovi"] = null;
+            HttpContext.Current.Session["InvitedIds"] = null;
 
             RasporedStolovaDiv.Visible = false;
             InviteDiv.Visible = false;
@@ -372,7 +383,7 @@ namespace RestBiz
 
             using (var ctx = new RestBizContext())
             {
-                var rezervacije = (from r in ctx.Rezervacije where (r.Zavrsetak>=Pocetak && r.Zavrsetak<=Zavrsetak && r.Restoran.RestoranId == IdRestorana) || (r.Pocetak<=Zavrsetak && r.Pocetak>=Pocetak && r.Restoran.RestoranId == IdRestorana) select r).ToList();
+                var rezervacije = (from r in ctx.Rezervacije where ((r.Zavrsetak >= Pocetak && r.Zavrsetak <= Zavrsetak && r.Pocetak<=Pocetak) || (r.Pocetak <= Zavrsetak && r.Pocetak >= Pocetak && r.Zavrsetak>=Zavrsetak) || (r.Pocetak <= Pocetak && r.Zavrsetak >= Zavrsetak) || (Pocetak<=r.Pocetak && Zavrsetak>=r.Zavrsetak)) && (r.Restoran.RestoranId == IdRestorana) select r).ToList();
                 if (rezervacije != null)
                 {
                     foreach (var rez in rezervacije)

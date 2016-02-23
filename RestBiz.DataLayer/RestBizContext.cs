@@ -24,6 +24,7 @@ namespace RestBiz.DataLayer
         public DbSet<Rezervacija> Rezervacije { get; set; }
         public DbSet<MenadzerRestorana> MenadzeriRestorana { get; set; }
         public DbSet<MenadzerSistema> MenadzeriSistema { get; set; }
+        public DbSet<Poziv> Pozivi { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

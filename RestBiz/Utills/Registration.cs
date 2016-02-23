@@ -32,7 +32,7 @@ namespace RestBiz.Utills
                 ctx.SaveChanges();
             }
 
-            using (MailMessage mm = new MailMessage("nenad.rad933@gmail.com", userEmail))
+            using (MailMessage mm = new MailMessage(new MailAddress("nenad.rad933@gmail.com", "RestBiz"), new MailAddress(userEmail)))
             {
                 mm.Subject = "Aktivacija naloga";
                 string body = "Pozdrav, " + korisnik.Ime + ",";
