@@ -19,6 +19,15 @@ namespace RestBiz.DataLayer.Entities
         [Required]
         public virtual Rezervacija Rezervacija { get; set; }
 
+        [Required]
         public bool Potvrdio { get; set; }
+
+        [Required]
+        public bool Dolazi { get; set; }
+
+        [Required]
+        public bool Ocenjeno { get; set; }
+
+        public decimal Ocena { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using RestBiz.Utills;
+using RestBiz.DataLayer.Services;
 
 namespace RestBiz
 {
@@ -355,6 +356,8 @@ namespace RestBiz
 
                 rezervacija.Pocetak = Pocetak;
                 rezervacija.Zavrsetak = Zavrsetak;
+
+                rezervacija.Korisnik = new KorisnikService().FindUserByEmail(HttpContext.Current.User.Identity.Name);
 
                 ctx.Rezervacije.Add(rezervacija);
 

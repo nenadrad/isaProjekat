@@ -18,7 +18,11 @@ namespace RestBiz.Utills
                 Poziv poziv = new Poziv()
                 {
                     Korisnik = prijatelj,
-                    Rezervacija = rezervacija
+                    Rezervacija = rezervacija,
+                    Potvrdio = false,
+                    Dolazi = false,
+                    Ocenjeno = false,
+                    Ocena = -1
                 };
 
                 ctx.Pozivi.Add(poziv);

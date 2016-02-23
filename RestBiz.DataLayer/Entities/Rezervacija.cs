@@ -13,8 +13,11 @@ namespace RestBiz.DataLayer.Entities
         [Key]
         public int RezervacijaId { get; set; }
 
+       
+        public virtual Korisnik Korisnik { get; set; }
+
         [Required]
-        public Restoran Restoran { get; set; }
+        public virtual Restoran Restoran { get; set; }
 
         [Required]
         public DateTime Pocetak { get; set; }

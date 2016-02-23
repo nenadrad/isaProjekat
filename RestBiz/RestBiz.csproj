@@ -89,6 +89,7 @@
     <Content Include="Scripts\jquery.timepicker.js" />
     <Content Include="Scripts\konfiguracijaSedenja.js" />
     <Content Include="Scripts\mojProfil.js" />
+    <Content Include="Scripts\potvrdaRezervacije.js" />
     <Content Include="Scripts\prijatelji.js" />
     <Content Include="Scripts\profilRestorana.js" />
     <Content Include="Scripts\registracija.js" />

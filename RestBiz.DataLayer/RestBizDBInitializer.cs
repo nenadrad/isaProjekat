@@ -60,9 +60,19 @@ namespace RestBiz.DataLayer
             Lozinka = "admin"
         };
 
+        MenadzerRestorana menadzerRestorana = new MenadzerRestorana()
+        {
+            Email = "menadzer@gmail.com",
+            Ime = "Menadzer",
+            Prezime = "Restorana",
+            Lozinka = "menadzer"
+        };
+
 
         protected override void Seed(RestBizContext context)
         {
+            menadzerRestorana.Restoran = restoran1;
+
             jelovnik1.Stavke = new List<StavkaJelovnika>() { new StavkaJelovnika("Jelo1", "Opis1", 100), new StavkaJelovnika("Jelo2", "Opis2", 200) };
 
             jelovnik2.Stavke = new List<StavkaJelovnika>() { new StavkaJelovnika("Jelo3", "Opis3", 300), new StavkaJelovnika("Jelo4", "Opis4", 400) };
@@ -72,6 +82,7 @@ namespace RestBiz.DataLayer
 
             context.Korisnici.Add(testKorisnik);
             context.MenadzeriSistema.Add(menadzerSistema);
+            context.MenadzeriRestorana.Add(menadzerRestorana);
             context.Korisnici.Add(korisnik1);
             context.Korisnici.Add(korisnik2);
             context.Restorani.Add(restoran1);
