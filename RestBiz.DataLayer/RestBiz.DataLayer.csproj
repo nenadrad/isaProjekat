@@ -54,6 +54,8 @@
     <Compile Include="Entities\AktivacijaKorisnika.cs" />
     <Compile Include="Entities\Jelovnik.cs" />
     <Compile Include="Entities\KonfiguracijaSedenja.cs" />
+    <Compile Include="Entities\MenadzerRestorana.cs" />
+    <Compile Include="Entities\MenadzerSistema.cs" />
     <Compile Include="Entities\PozicijaStola.cs" />
     <Compile Include="Entities\Rezervacija.cs" />
     <Compile Include="Entities\StavkaJelovnika.cs" />

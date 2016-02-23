@@ -16,14 +16,14 @@ namespace RestBiz
         {
             if (!Page.IsPostBack)
             {
-                using (RestBizContext ctx = new RestBizContext())
+                /*using (RestBizContext ctx = new RestBizContext())
                 {
                     new RestBizDBInitializer().InitializeDatabase(ctx);
-                }
+                }*/
 
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    Response.Redirect("Default.aspx");
+                    Response.Redirect("Home.aspx");
                 }
             }
 
@@ -34,9 +34,13 @@ namespace RestBiz
             bool exists = false;
             bool isActivated = false;
             exists = Membership.ValidateUser(LoginUser.UserName, LoginUser.Password);
-            if (exists)
+           if (exists)
             {
-                isActivated = new KorisnikService().IsActivated(LoginUser.UserName);
+                string[] roles = Roles.GetRolesForUser(LoginUser.UserName);
+                if (roles.Contains("MenadzerSistema") || roles.Contains("MenadzerRestorana"))
+                    isActivated = true;
+                else 
+                    isActivated = new KorisnikService().IsActivated(LoginUser.UserName);
             }
             if (exists && isActivated)
             {

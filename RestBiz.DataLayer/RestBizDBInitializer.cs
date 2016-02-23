@@ -9,13 +9,13 @@ namespace RestBiz.DataLayer
 {
     public class RestBizDBInitializer : DropCreateDatabaseIfModelChanges<RestBizContext>
     {
-        Korisnik admin = new Korisnik
+        Korisnik testKorisnik = new Korisnik
         {
             Ime = "Nenad",
             Prezime = "Rad",
             Adresa = "Kisacka 51",
-            Email = "nenad.rad933@gmail.com",
-            Lozinka = "admin"
+            Email = "nenad.rad933@live.com",
+            Lozinka = "nesa"
         };
 
         Korisnik korisnik1 = new Korisnik
@@ -52,7 +52,13 @@ namespace RestBiz.DataLayer
         Jelovnik jelovnik1 = new Jelovnik();
         Jelovnik jelovnik2 = new Jelovnik();
 
-        
+        MenadzerSistema menadzerSistema = new MenadzerSistema()
+        {
+            Email = "nenad.rad933@gmail.com",
+            Ime = "Nenad",
+            Prezime = "Prezime",
+            Lozinka = "admin"
+        };
 
 
         protected override void Seed(RestBizContext context)
@@ -64,7 +70,8 @@ namespace RestBiz.DataLayer
             restoran1.Jelovnik = jelovnik1;
             restoran2.Jelovnik = jelovnik2;
 
-            context.Korisnici.Add(admin);
+            context.Korisnici.Add(testKorisnik);
+            context.MenadzeriSistema.Add(menadzerSistema);
             context.Korisnici.Add(korisnik1);
             context.Korisnici.Add(korisnik2);
             context.Restorani.Add(restoran1);

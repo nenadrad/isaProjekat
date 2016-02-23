@@ -52,7 +52,7 @@ function snimi() {
                 toastr.success(response.retVal);
 
                 $('.stolovi').addClass("pure-button-disabled");
-                $("#btnSnimi").attr('href', "Restorani.aspx?id=" + getURLParameter("idRest"));
+                $("#btnSnimi").attr('href', "ProfilRestorana.aspx?id=" + getURLParameter("idRest"));
                 $("#btnSnimi").html('Povratak na profil restorana');
                
             }

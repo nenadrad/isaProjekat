@@ -22,6 +22,15 @@ namespace RestBiz {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl restoraniTableDiv;
         
         /// <summary>
+        /// thRez control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell thRez;
+        
+        /// <summary>
         /// RestoraniRepeater control.
         /// </summary>
         /// <remarks>

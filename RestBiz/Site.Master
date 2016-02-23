@@ -33,6 +33,7 @@
                 <div class="header">
                     <div class="pure-menu pure-menu-horizontal">
                         <ul class="pure-menu-list">
+                            <li class="pure-menu-item" id="HomeLink" runat="server" style="float:left"><a href="Home.aspx" class="pure-menu-link">Početna</a></li>
                             <li class="pure-menu-item" id="RestoraniLink" runat="server"><a href="Restorani.aspx" class="pure-menu-link">Restorani</a></li>
                             <li class="pure-menu-item" id="PrijateljiLink" runat="server"><a href="Prijatelji.aspx" class="pure-menu-link">Prijatelji</a></li>
                             <li class="pure-menu-item" id="MojProfilLink" runat="server"><a href="MojProfil.aspx" class="pure-menu-link">Moj Profil</a></li>

@@ -28,5 +28,7 @@ namespace RestBiz.DataLayer.Entities
 
         public virtual KonfiguracijaSedenja KonfiguracijaSedenja { get; set; }
 
+        public virtual ICollection<MenadzerRestorana> Menadzeri { get; set; }
+
     }
 }

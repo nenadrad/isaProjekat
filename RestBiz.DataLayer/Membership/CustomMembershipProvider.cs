@@ -150,12 +150,32 @@ namespace RestBiz.DataLayer.Membership
         {
             using (RestBizContext ctx = new RestBizContext()) 
             {
-                var student = (from k in ctx.Korisnici where k.Email == username select k).FirstOrDefault<Korisnik>();
-                if (student != null)
+                var menadzerSistema = (from k in ctx.MenadzeriSistema where k.Email == username select k).FirstOrDefault<MenadzerSistema>();
+                if (menadzerSistema != null)
                 {
-                    if (student.Lozinka == password)
+                    if (menadzerSistema.Lozinka == password)
                         return true;
                 }
+                else
+                {
+                    var menadzerRestorana = (from k in ctx.MenadzeriRestorana where k.Email == username select k).FirstOrDefault<MenadzerRestorana>();
+                    if(menadzerRestorana != null)
+                    {
+                        if (menadzerRestorana.Lozinka == password)
+                            return true;
+                    }
+                    else
+                    {
+                        var korisnik = (from k in ctx.Korisnici where k.Email == username select k).FirstOrDefault<Korisnik>();
+                        if (korisnik != null)
+                        {
+                            if (korisnik.Lozinka == password)
+                                return true;
+                        }
+                    }
+
+                }
+
             }
 
             return false;

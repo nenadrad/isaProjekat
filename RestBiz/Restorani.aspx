@@ -11,15 +11,15 @@
             <thead>
                 <tr>
                     <th>Naziv</th>
-                    <th>Rezervacija</th>
+                    <th id="thRez" runat="server" visible="false">Rezervacija</th>
                 </tr>
             </thead>
             <tbody>
-                <asp:Repeater ID="RestoraniRepeater" runat="server">
+                <asp:Repeater ID="RestoraniRepeater" runat="server" OnItemDataBound="RestoraniRepeater_ItemDataBound">
                     <ItemTemplate>
                         <tr>
                             <td><a class="pure-button pure-button-hover" href = "ProfilRestorana.aspx?id=<%# Eval("RestoranId") %>"><%# Eval("Naziv") %></a></td>
-                            <td align="center"><a class="pure-button pure-button-primary" href = "Rezervacija.aspx?idRest=<%# Eval("RestoranId") %>"></a></td>
+                            <td align="center" id="tdRez" runat="server" visible="false"><a class="pure-button pure-button-primary" href = "Rezervacija.aspx?idRest=<%# Eval("RestoranId") %>"></a></td>
                         </tr>
                         <input type="hidden"  value="<%# Eval("RestoranId") %>"/>
                     </ItemTemplate>

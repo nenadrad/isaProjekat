@@ -13,7 +13,14 @@ namespace RestBiz
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (!IsPostBack)
+            {
+                if (Roles.IsUserInRole("MenadzerSistema") || Roles.IsUserInRole("MenadzerRestorana"))
+                {
+                    MojProfilLink.Visible = false;
+                    PrijateljiLink.Visible = false;
+                }
+            }
         }
 
         public void MarkAsSelected(string linkId)
@@ -21,12 +28,14 @@ namespace RestBiz
             HtmlGenericControl link = (HtmlGenericControl)FindControl(linkId);
             link.Attributes.Remove("class");
             link.Attributes.Add("class", "pure-menu-item pure-menu-selected");
+
+            
         }
 
         protected void LogoutButton_Click(object sender, EventArgs e)
         {
             FormsAuthentication.SignOut();
-            FormsAuthentication.RedirectToLoginPage();
+            Response.Redirect("Home.aspx");
         }
 
         

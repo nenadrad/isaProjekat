@@ -1,11 +1,13 @@
 ﻿using RestBiz.Ajax;
 using RestBiz.DataLayer;
 using RestBiz.DataLayer.Entities;
+using RestBiz.DataLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.Security;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -28,6 +30,8 @@ namespace RestBiz
             }
         }
 
+        private bool UserIsManager { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -35,6 +39,20 @@ namespace RestBiz
                 int idRestorana = Convert.ToInt32(Request.QueryString["id"]);
                 using(var ctx = new RestBizContext())
                 {
+
+                    if (Roles.IsUserInRole("MenadzerRestorana"))
+                    {
+                        MenadzerRestorana currentUser = null;
+                        string userEmail = HttpContext.Current.User.Identity.Name;
+                        currentUser = (from k in ctx.MenadzeriRestorana where k.Email == userEmail select k).FirstOrDefault();
+                        if ((currentUser.Restoran.RestoranId == idRestorana))
+                            UserIsManager = true;
+                        else
+                            UserIsManager = false;
+                    }
+                    else
+                        UserIsManager = false;
+
                     Restoran restoran = ctx.Restorani.Find(idRestorana);
                     PodaciRestorana.DataSource = new List<Restoran>() { restoran };
                     PodaciRestorana.DataBind();
@@ -44,14 +62,23 @@ namespace RestBiz
                     JelovnikRepeater.DataSource = restoran.Jelovnik.Stavke.ToList();
                     JelovnikRepeater.DataBind();
 
+                    if (UserIsManager)
+                    {
+                        ButtonConf.Visible = true;
+                        thEdit.Visible = true;
+                        thDel.Visible = true;
+                        dodajBtn.Visible = true;
+                    }
+
                     if (ctx.KonfiguracijeSedenja.Select(k => k.IdRestorana).Contains(RestoranId))
                         ButtonConf.Visible = false;
                     else
                         ButtonConf.NavigateUrl = "KonfiguracijaSedenja.aspx?idRest=" + idRestorana;
 
+                    
+                   
                 }
 
-                
             }
         }
 
@@ -173,6 +200,24 @@ namespace RestBiz
                 JelovnikRepeater.DataSource = ctx.Restorani.Find(RestoranId).Jelovnik.Stavke.ToList();
                 JelovnikRepeater.DataBind();
 
+            }
+        }
+
+        protected void PodaciRestorana_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            HtmlAnchor btn = (HtmlAnchor)e.Item.FindControl("editRestBtn");
+            if (UserIsManager)
+                btn.Visible = true;
+        }
+
+        protected void JelovnikRepeater_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            HtmlTableCell cellEdit = (HtmlTableCell)e.Item.FindControl("editCell");
+            HtmlTableCell cellDel = (HtmlTableCell)e.Item.FindControl("delCell");
+            if(UserIsManager)
+            {
+                cellEdit.Visible = true;
+                cellDel.Visible = true;
             }
         }
     }

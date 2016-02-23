@@ -81,6 +81,7 @@
     <Content Include="Registracija.aspx" />
     <Content Include="Restorani.aspx" />
     <Content Include="Rezervacija.aspx" />
+    <Content Include="Scripts\home.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.js" />
@@ -191,6 +192,7 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
+    <Compile Include="Utills\MyRoleProvider.cs" />
     <Compile Include="Utills\Registration.cs" />
   </ItemGroup>
   <ItemGroup>

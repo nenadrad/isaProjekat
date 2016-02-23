@@ -28,7 +28,7 @@ namespace RestBiz
 
             using(var ctx = new RestBizContext())
             {
-                if (ctx.Korisnici.Select(k => k.Email).Contains(email))
+                if (ctx.MenadzeriSistema.Select(k => k.Email).Contains(email) || ctx.MenadzeriRestorana.Select(k => k.Email).Contains(email) || ctx.Korisnici.Select(k => k.Email).Contains(email))
                     retVal = new JavaScriptSerializer().Serialize(new AjaxCallStatus(0, "Korisnik sa unetim email-om već postoji"));
                 else
                 {
