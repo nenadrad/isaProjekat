@@ -69,6 +69,7 @@ namespace RestBiz
         public static string AddFriend(int id)
         {
             string retVal = "nista";
+            Korisnik prijateljClone = null;
             using (var ctx = new RestBizContext())
             {
                 var prijatelj = ctx.Korisnici.Find(id);
@@ -79,10 +80,16 @@ namespace RestBiz
                     retVal = prijatelj.ImePrezime;
                     string userEmail = System.Web.HttpContext.Current.User.Identity.Name;
                     var korisnik = (from k in ctx.Korisnici where k.Email == userEmail select k).FirstOrDefault<Korisnik>();
-                    retVal = new JavaScriptSerializer().Serialize(prijatelj);
+                    prijateljClone = new Korisnik()
+                    {
+                        Ime=prijatelj.Ime,
+                        Prezime=prijatelj.Prezime
+                    };
                     korisnik.Prijatelji.Add(prijatelj);
                     ctx.SaveChanges(); 
                 }
+                retVal = new JavaScriptSerializer().Serialize(prijateljClone);
+                
             }
 
             return retVal;
@@ -92,15 +99,22 @@ namespace RestBiz
         public static string RemoveFriend(int id)
         {
             string retVal = "";
+            Korisnik prijateljClone = null;
             using (var ctx = new RestBizContext())
             {
                 string userEmail = System.Web.HttpContext.Current.User.Identity.Name;
                 var korisnik = (from k in ctx.Korisnici where k.Email == userEmail select k).FirstOrDefault<Korisnik>();
                 var prijatelj = ctx.Korisnici.Find(id);
+                prijateljClone = new Korisnik()
+                {
+                    Ime = prijatelj.Ime,
+                    Prezime = prijatelj.Prezime
+                };
                 korisnik.Prijatelji.Remove(prijatelj);
                 ctx.SaveChanges();
-                retVal = new JavaScriptSerializer().Serialize(prijatelj);
+                
             }
+            retVal = new JavaScriptSerializer().Serialize(prijateljClone);
             return retVal;
         }
 

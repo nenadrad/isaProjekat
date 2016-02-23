@@ -131,9 +131,6 @@ namespace RestBiz
 
         protected void NextButton1_Click(object sender, EventArgs e)
         {
-            RasporediStolove();
-            RasporedStolovaDiv.Attributes.Remove("style");          
-
             Dictionary<string, string> form = new Dictionary<string, string>();
             form["Restoran"] = Name.Text;
             form["Datum"] = DateInput.Value;
@@ -143,6 +140,9 @@ namespace RestBiz
             Forma = form;
 
             NextButton1.Visible = false;
+
+            RasporediStolove();
+            RasporedStolovaDiv.Attributes.Remove("style");     
         }
 
         private void RasporediStolove()
@@ -180,7 +180,10 @@ namespace RestBiz
                 int brojstola = Stolovi[pozicija];
                 sto.InnerHtml = brojstola.ToString();
                 sto.Attributes.Remove("class");
-                sto.Attributes.Add("class", "pure-button button-xlarge free-table stolovi");
+                if(!isTaken(brojstola))
+                    sto.Attributes.Add("class", "pure-button button-xlarge free-table stolovi");
+                else
+                    sto.Attributes.Add("class", "pure-button button-xlarge taken-table stolovi");
             } catch (KeyNotFoundException ex)
             {
                 sto.Attributes.Remove("class");
@@ -196,21 +199,8 @@ namespace RestBiz
             DateInput.Value = form["Datum"];
             DateTimeInput.Value = form["Vreme"];
             Time.Text = form["Trajanje"];
-
-            /*NextButton1.Click -= NextButton1_Click;
-            NextButton1.Click += new EventHandler(NextButton1_Click2);*/
         }
 
-        /*protected void NextButton1_Click2(object sender, EventArgs e)
-        {
-
-            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "GetIzabraniStolovi()", true);
-
-            InvitePanel.Visible = true;
-
-            NextButton1.Visible = false;
-
-        }*/
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
@@ -244,10 +234,6 @@ namespace RestBiz
             Korisnik prijatelj = (Korisnik)e.Item.DataItem;
             string Id = prijatelj.KorisnikId.ToString();
             HtmlAnchor buttonCell = (HtmlAnchor)e.Item.FindControl("buttonCell");
-
-            /*HtmlInputHidden hidden = (HtmlInputHidden)e.Item.FindControl("userId");
-            hidden.ID = "user"+Id.ToString();
-            hidden.Value = 0.ToString();*/
 
             List<int> InvitedIds = (List<int>)HttpContext.Current.Session["InvitedIds"];
 
@@ -375,5 +361,27 @@ namespace RestBiz
             MessageDiv.Visible = true;
 
          }
+
+        private bool isTaken(int brojStola)
+        {
+            string[] datumInputs = Forma["Datum"].Split('/');
+            string[] vremeInputs = Forma["Vreme"].Split(':');
+
+            DateTime Pocetak = new DateTime(Convert.ToInt32(datumInputs[2]), Convert.ToInt32(datumInputs[0]), Convert.ToInt32(datumInputs[1]), Convert.ToInt32(vremeInputs[0]), Convert.ToInt32(vremeInputs[1]), 0);
+            DateTime Zavrsetak = Pocetak.AddHours(Convert.ToInt32(Forma["Trajanje"]));
+
+            using (var ctx = new RestBizContext())
+            {
+                var rezervacije = (from r in ctx.Rezervacije where (r.Zavrsetak>=Pocetak && r.Zavrsetak<=Zavrsetak && r.Restoran.RestoranId == IdRestorana) || (r.Pocetak<=Zavrsetak && r.Pocetak>=Pocetak && r.Restoran.RestoranId == IdRestorana) select r).ToList();
+                if (rezervacije != null)
+                {
+                    foreach (var rez in rezervacije)
+                        foreach (var sto in rez.Stolovi)
+                            if (sto.BrojStola == brojStola)
+                                return true;
+                }
+            }
+            return false;
+        }
     }
 }

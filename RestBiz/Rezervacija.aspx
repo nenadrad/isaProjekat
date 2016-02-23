@@ -21,6 +21,10 @@
         .selected {
             border : 2px solid red;
         }
+        
+        .taken-table {
+            background: rgb(202, 60, 60); 
+        }
 
     </style>
 

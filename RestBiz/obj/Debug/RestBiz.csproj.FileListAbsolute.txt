@@ -1,0 +1,11 @@
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\bin\RestBiz.dll
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\bin\RestBiz.pdb
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\bin\EntityFramework.dll
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\bin\EntityFramework.SqlServer.dll
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\bin\RestBiz.DataLayer.dll
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\bin\RestBiz.DataLayer.pdb
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\bin\EntityFramework.xml
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\bin\EntityFramework.SqlServer.xml
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\obj\Debug\RestBiz.csprojResolveAssemblyReference.cache
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\obj\Debug\RestBiz.dll
+E:\Faks\4. godina\ISA\RestBiz\RestBiz\obj\Debug\RestBiz.pdb

@@ -1,0 +1,10 @@
+E:\Faks\4. godina\ISA\RestBiz\RestBiz.DataLayer\bin\Debug\RestBiz.DataLayer.dll.config
+E:\Faks\4. godina\ISA\RestBiz\RestBiz.DataLayer\bin\Debug\RestBiz.DataLayer.dll
+E:\Faks\4. godina\ISA\RestBiz\RestBiz.DataLayer\bin\Debug\RestBiz.DataLayer.pdb
+E:\Faks\4. godina\ISA\RestBiz\RestBiz.DataLayer\bin\Debug\EntityFramework.dll
+E:\Faks\4. godina\ISA\RestBiz\RestBiz.DataLayer\bin\Debug\EntityFramework.SqlServer.dll
+E:\Faks\4. godina\ISA\RestBiz\RestBiz.DataLayer\bin\Debug\EntityFramework.xml
+E:\Faks\4. godina\ISA\RestBiz\RestBiz.DataLayer\bin\Debug\EntityFramework.SqlServer.xml
+E:\Faks\4. godina\ISA\RestBiz\RestBiz.DataLayer\obj\Debug\RestBiz.DataLayer.dll
+E:\Faks\4. godina\ISA\RestBiz\RestBiz.DataLayer\obj\Debug\RestBiz.DataLayer.pdb
+E:\Faks\4. godina\ISA\RestBiz\RestBiz.DataLayer\obj\Debug\RestBiz.DataLayer.csprojResolveAssemblyReference.cache
